@@ -138,7 +138,6 @@ router.get("/user/:user_id", async(req, res) => {
   }
 })
 
-
 // @route  DELETE api/profile
 // @desc   Delete Profile | User and all their Posts
 // @access Private
@@ -157,5 +156,62 @@ router.delete("/", auth, async(req, res) => {
   }
 })
 
+// @route  PUT api/profile/experience
+// @desc   Add | Update user's experience
+// @access Private
+router.put(
+  "/experience", 
+  [
+    auth, 
+    check('title', 'Title is Required')
+      .not()
+      .isEmpty(),
+    check('company', 'Company is Required')
+      .not()
+      .isEmpty(),
+    check('from', 'From Date is Required')
+      .not()
+      .isEmpty()
+  ],
+  async(req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    const { 
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
+    } = req.body
+
+    const newExp = {
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
+    }
+    
+    try {
+      const profile = await Profile.findOne({ user: req.user.id })
+      profile.experience.unshift(newExp)
+
+      await profile.save()
+
+      res.json(profile)
+      
+    } catch (err) {
+      console.error(err.message)
+      return res.status(500).json({ errors: [{ msg: "Server Error" }] })  
+    }
+  }
+)
 
 module.exports = router
