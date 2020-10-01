@@ -1,7 +1,5 @@
 ## Welcome to Dev-Connect Social Network
 
-#
-
 Tech Stack
 
 > MERN
