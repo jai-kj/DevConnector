@@ -2,4 +2,12 @@
 
 #
 
+Tech Stack
+
+> MERN
+
+> Redux
+
+#
+
 Version 1.0.0
