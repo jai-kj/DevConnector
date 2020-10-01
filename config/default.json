@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://jai_823:AIR1968@jai@cluster0.zg0tc.mongodb.net/DevConnector?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://jai_823:AIR1968@jai@cluster0.zg0tc.mongodb.net/DevConnector?retryWrites=true&w=majority",
+  "JWTSecret": "mySecret123"
 }
