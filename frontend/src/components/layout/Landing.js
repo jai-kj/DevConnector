@@ -1,5 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+// import PropTypes from 'prop-types'
 
 const Landing = props => {
   return (
@@ -12,8 +13,8 @@ const Landing = props => {
             other developers
           </p>
           <div className="buttons">
-            <a href="register.html" className="btn btn-primary">Sign Up</a>
-            <a href="login.html" className="btn btn-light">Login</a>
+            <Link to="/register" className="btn btn-primary">Sign Up</Link>
+            <Link to="/login" className="btn btn-light">Login</Link>
           </div>
         </div>
       </div>
@@ -21,8 +22,8 @@ const Landing = props => {
   )
 }
 
-Landing.propTypes = {
+// Landing.propTypes = {
 
-}
+// }
 
 export default Landing
