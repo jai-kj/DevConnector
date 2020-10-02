@@ -1,11 +1,12 @@
 import React from 'react';
-
-function App() {
-  return (
-    <div className="App">
-      Dev Connector
-    </div>
-  );
-}
+import Navbar from './components/layout/Navbar'
+import Landing from './components/layout/Landing'
+import './App.scss';
+const App = () => (
+  <>
+    <Navbar />
+    <Landing />
+  </>
+);
 
 export default App;
