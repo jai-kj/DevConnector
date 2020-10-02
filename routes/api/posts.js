@@ -104,4 +104,69 @@ router.delete("/:post_id", auth, async(req, res) => {
     return res.status(500).json({ errors: [{ msg: 'Server Error' }] })
   }
 })
+
+// @route  PUT api/posts/:post_id/like
+// @desc   Add like to post
+// @access Private
+router.put("/:post_id/like", auth, async(req, res) => {
+  try {
+    const post = await Post.findById(req.params.post_id)
+    if(!post) {
+      return res.status(404).json({ msg: "Post Not Found!" })
+    }
+
+    // Check if Post is already liked
+    if(post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
+      return res.status(400).json({ msg: "Post already liked!" })
+    }
+
+    post.likes.unshift({ user: req.user.id })
+    await post.save()
+
+    res.json(post.likes)
+
+  } catch (err) {
+    console.error(err.message)
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Post Not Found' });
+    }
+    return res.status(500).json({ errors: [{ msg: 'Server Error' }] })
+  }
+})
+
+// @route  PUT api/posts/:post_id/unlike
+// @desc   Remove like from post
+// @access Private
+router.put("/:post_id/unlike", auth, async(req, res) => {
+  try {
+    const post = await Post.findById(req.params.post_id)
+    if(!post) {
+      return res.status(404).json({ msg: "Post Not Found!" })
+    }
+
+    // Check if Post is not liked
+    if(post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
+      return res.status(400).json({ msg: "Post not liked yet to unlike!" })
+    }
+
+    const removeIndex = post.likes.map(like => like.user.toString()).indexOf(req.user.id)
+    if(removeIndex < 0) {
+      return res.status(400).json({ msg: "No User Like Found!"})
+    }
+
+    post.likes.splice(removeIndex, 1)
+
+    await post.save()
+
+    res.json(post.likes)
+
+  } catch (err) {
+    console.error(err.message)
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Post Not Found' });
+    }
+    return res.status(500).json({ errors: [{ msg: 'Server Error' }] })
+  }
+})
+
 module.exports = router
