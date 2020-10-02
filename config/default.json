@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://jai_823:AIR1968@jai@cluster0.zg0tc.mongodb.net/DevConnector?retryWrites=true&w=majority",
-  "JWTSecret": "mySecret123"
+  "JWTSecret": "mySecret123",
+  "GithubClientID": "ae85d4eca064c53e3258",
+  "GithubSecret": "f126b36827e6b3e2206ba5d6a6cdbfc59db01f21"
 }
