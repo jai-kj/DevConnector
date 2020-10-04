@@ -3,6 +3,7 @@ import { setAlert } from "./alertAction"
 import { 
   ADD_POST,
   DELETE_POST,
+  GET_POST,
   GET_POSTS, 
   POST_ERROR, 
   UPDATE_LIKES
@@ -14,6 +15,26 @@ export const getAllPosts = () => async dispatch => {
 
     dispatch({
       type: GET_POSTS,
+      payload: res.data
+    })
+
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status
+      }
+    })
+  }
+}
+
+export const getPost = post_id => async dispatch => {
+  try {
+    const res = await axios.get(`/devconnector/api/v1/posts/${post_id}`)
+
+    dispatch({
+      type: GET_POST,
       payload: res.data
     })
 
