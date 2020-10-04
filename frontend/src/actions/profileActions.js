@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { setAlert } from './alertAction'
 import {
+  CLEAR_PROFILE,
+  DELETE_ACCOUNT,
   GET_PROFILE,
   PROFILE_ERROR,
   UPDATE_PROFILE
@@ -126,5 +128,67 @@ export const addEducation = (formData, history) => async dispatch => {
         status: err.response.statusCode
       }
     })
+  }
+}
+
+export const deleteExperience = exp_id => async dispatch => {
+  if(window.confirm('Delete Experience? This is permanent delete request!')) {
+    try {
+      const res = await axios.delete(`/devconnector/api/v1/profile/experience/${exp_id}`)
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: res.data
+      })
+      dispatch(setAlert('Experience Deleted', 'success'))
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.statusCode
+        }
+      })
+    }
+  }
+}
+
+export const deleteEducation = edu_id => async dispatch => {
+  if(window.confirm('Delete Education? This is permanent delete request!')) {
+    try {
+      const res = await axios.delete(`/devconnector/api/v1/profile/education/${edu_id}`)
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: res.data
+      })
+      dispatch(setAlert('Education Deleted', 'success'))
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.statusCode
+        }
+      })
+    }
+  }
+}
+
+// Delete Profile & Account
+export const deleteAccount = () => async dispatch => {
+  if(window.confirm('Are you sure? This is permanent delete request!')) {
+    try {
+      await axios.delete('/devconnector/api/v1/profile')
+      dispatch({ type: CLEAR_PROFILE })
+      dispatch({ type: DELETE_ACCOUNT })
+      dispatch(setAlert('Account Deleted Permanently'))
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.statusCode
+        }
+      })
+    }
   }
 }
