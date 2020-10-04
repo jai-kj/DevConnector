@@ -52,8 +52,7 @@ const EditProfile = ({ createProfile, history, getCurrentProfile, profile: { pro
       linkedin: loading || !profile.social ? '' : profile.social.linkedin,
       youtube: loading || !profile.social ? '' : profile.social.youtube,
     })
-    //eslint-disable-next-line
-  }, [])
+  }, [ loading, profile ])
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
