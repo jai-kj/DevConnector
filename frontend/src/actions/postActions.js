@@ -1,7 +1,9 @@
 import axios from "axios"
 import { setAlert } from "./alertAction"
 import { 
+  ADD_COMMENT,
   ADD_POST,
+  DELETE_COMMENT,
   DELETE_POST,
   GET_POST,
   GET_POSTS, 
@@ -145,3 +147,53 @@ export const addNewPost = formData => async dispatch => {
     })
   }
 }
+
+export const addComment = (post_id, formData) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }
+    const res = await axios.post(`/devconnector/api/v1/posts/${post_id}/comment`, formData, config)
+
+    dispatch({
+      type: ADD_COMMENT,
+      payload: res.data
+    })
+
+    dispatch(setAlert('Comment Added Successfully', 'success'))
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status
+      }
+    })
+  }
+}
+
+export const removeComment = (post_id, comment_id) => async dispatch => {
+  if(window.confirm('Do you want to delete the comment?')) {
+    try {
+      await axios.delete(`/devconnector/api/v1/posts/${post_id}/comment/${comment_id}`)
+
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: comment_id
+      })
+
+      dispatch(setAlert('Comment Deleted Successfully', 'success'))
+    } catch (err) {
+      dispatch({
+        type: POST_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status
+        }
+      })
+    }
+  }
+}
+

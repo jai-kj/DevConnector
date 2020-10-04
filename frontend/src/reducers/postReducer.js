@@ -1,5 +1,7 @@
 import { 
+  ADD_COMMENT,
   ADD_POST,
+  DELETE_COMMENT,
   DELETE_POST,
   GET_POST,
   GET_POSTS, 
@@ -54,6 +56,26 @@ export default function(state = initialState, action) {
         posts: [ payload, ...state.posts ],
         loading: false
       }
+
+    case ADD_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: payload
+        },
+        loading: false
+      }
+    
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter(comment => comment._id !== payload)
+        },
+        loading: false
+      }  
     
     case POST_ERROR:
       return {
