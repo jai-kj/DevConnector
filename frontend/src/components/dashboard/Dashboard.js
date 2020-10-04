@@ -31,7 +31,7 @@ const Dashboard = ({
       </p>
       {profile !== null ? (
         <>
-          <DashboardActions />
+          <DashboardActions user_id={user._id} />
           {profile.experience.length > 0 && (
             <Experience experience={profile.experience} />
           )}
