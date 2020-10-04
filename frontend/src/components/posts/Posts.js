@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getAllPosts } from '../../actions/postActions'
 
 import Spinner from '../layout/Spinner'
+import PostForm from './PostForm'
 import PostItem from './PostItem'
 
 const Posts = ({ getAllPosts, post: { loading, posts } }) => {
@@ -21,7 +22,7 @@ const Posts = ({ getAllPosts, post: { loading, posts } }) => {
           <p className="lead">
             <i className="fas fa-user" />{' '}Welcome to the community
           </p>
-          {/* Post Form */}
+          <PostForm />
           {
             posts.length > 0
               ? posts.map(post => <PostItem key={post._id} post={post} />)
