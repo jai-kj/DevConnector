@@ -20,7 +20,7 @@ const ProfileGithub = ({ username, getGithubRepos, repos }) => {
           ? <Spinner />
           : repos.length > 0 
             ? repos.map(repo => (
-              <div className="repo bg-white m-1 p-1" key={repo._id}>
+              <div className="repo bg-white m-1 p-1" key={repo.id}>
                 <div>
                   <h4>
                     <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
