@@ -8,6 +8,7 @@ import { getPost } from '../../actions/postActions'
 import Spinner from '../layout/Spinner'
 import PostItem from '../posts/PostItem'
 import CommentForm from './CommentForm'
+import CommentItem from './CommentItem'
 
 const Post = ({ post: { loading, post }, match, getPost }) => {
 
@@ -21,6 +22,13 @@ const Post = ({ post: { loading, post }, match, getPost }) => {
           <Link to="/posts" className="btn btn-light">Back To Posts</Link>
           <PostItem post={post} showActions={false} /> 
           <CommentForm post_id={match.params.post_id} /> 
+          <div className="comments">
+            {
+              post.comments.length > 0 
+                ? post.comments.map(comment => <CommentItem comment={comment} key={comment._id} post_id={post._id} />)
+                : <h4>No Comment Made Yet. Add new now!</h4>
+            }
+          </div>
         </>
   )
 }
