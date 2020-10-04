@@ -31,7 +31,6 @@ export const createProfile = (formData, history, edit = false) => async dispatch
       }
     }
     const res = await axios.post('/devconnector/api/v1/profile', formData, config)
-
     dispatch({
       type: GET_PROFILE,
       payload: res.data
@@ -44,7 +43,9 @@ export const createProfile = (formData, history, edit = false) => async dispatch
     }
 
   } catch (err) {
-    const errors = err.response.data.errors
+    let errors
+    if(err.response.data)
+      errors = err.response.data.errors
     if(errors) {
       errors.map(error => dispatch(setAlert(error.msg, 'danger')))
     }
